@@ -1,4 +1,5 @@
 import axios from 'axios';
+import parseLink from 'parse-link-header';
 // import users from './users.json';
 import userData from './mojombo.json';
 
@@ -10,7 +11,7 @@ axios.defaults.baseURL = GITHUB_API_URL;
 //   console.log(since);
 //   const newUsers = users.slice()
 //     .map((user) => ({ ...user, id: user.id + page * users.length }));
-//   return new Promise((res) => setTimeout(() => res(newUsers), 500));
+//   return new Promise((res) => setTimeout(() => res({ data: newUsers, hasMore: true }), 500));
 // };
 export const getUsers = async ({ since = 0, perPage }) => {
   const response = await axios({
@@ -21,8 +22,11 @@ export const getUsers = async ({ since = 0, perPage }) => {
       since,
     },
   });
-  console.log(response);
-  return response.data;
+
+  const { data } = response;
+  const links = parseLink(response.headers.link);
+  const hasMore = Boolean(links.next);
+  return { data, hasMore };
 };
 
 export const getUser = async () => Promise.resolve(userData);

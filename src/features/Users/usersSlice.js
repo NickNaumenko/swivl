@@ -8,6 +8,7 @@ const usersAdapter = createEntityAdapter({
 });
 
 const initialState = usersAdapter.getInitialState({
+  hasMore: true,
   status: loadingStates.IDLE,
   error: null,
 });
@@ -29,8 +30,9 @@ const usersSlice = createSlice({
       state.status = loadingStates.LOADING;
     },
     [fetchUsers.fulfilled]: (state, { payload }) => {
-      const users = payload;
-      usersAdapter.addMany(state, users);
+      const { data, hasMore } = payload;
+      usersAdapter.addMany(state, data);
+      state.hasMore = hasMore;
     },
     [fetchUsers.rejected]: (state, { error }) => {
       state.error = error;
