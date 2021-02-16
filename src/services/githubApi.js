@@ -5,7 +5,7 @@ const GITHUB_API_URL = 'https://api.github.com/';
 
 axios.defaults.baseURL = GITHUB_API_URL;
 
-export const getUsers = async ({ since = 0, perPage }) => {
+export const getUsers = async ({ since = 0, perPage } = {}) => {
   const response = await axios({
     method: 'GET',
     url: '/users',
