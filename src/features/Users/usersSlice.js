@@ -14,8 +14,8 @@ const initialState = usersAdapter.getInitialState({
 
 export const fetchUsers = createAsyncThunk(
   'users/fetch',
-  async () => {
-    const response = await githubApi.getUsers();
+  async (options) => {
+    const response = await githubApi.getUsers(options);
     return response;
   },
 );
@@ -31,6 +31,9 @@ const usersSlice = createSlice({
     [fetchUsers.fulfilled]: (state, { payload }) => {
       const users = payload;
       usersAdapter.addMany(state, users);
+    },
+    [fetchUsers.rejected]: (state, { error }) => {
+      state.error = error;
     },
   },
 });
