@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { Image, List } from 'semantic-ui-react';
 import { selectUserById } from './usersSlice';
+import styles from './UserItem.module.css';
 
 const UserItem = ({ id }) => {
   const user = useSelector((state) => selectUserById(state, id));
@@ -12,8 +13,9 @@ const UserItem = ({ id }) => {
   };
 
   return (
-    <List.Item onClick={handleClick}>
+    <List.Item className={styles.item} onClick={handleClick}>
       <Image
+        className={styles.avatar}
         size="tiny"
         avatar
         src={user.avatar_url}
