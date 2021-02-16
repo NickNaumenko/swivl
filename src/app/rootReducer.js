@@ -1,6 +1,8 @@
+import userSlice from 'features/User/userSlice';
 import { combineReducers } from 'redux';
-import usersReducer from '../features/Users/usersSlice';
+import usersSlice from '../features/Users/usersSlice';
 
 export default combineReducers({
-  users: usersReducer,
+  users: usersSlice,
+  user: userSlice,
 });

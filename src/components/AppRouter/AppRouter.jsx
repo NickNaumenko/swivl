@@ -1,8 +1,8 @@
+import User from 'features/User/User';
 import React from 'react';
 import {
   BrowserRouter as Router, NavLink, Route, Switch,
 } from 'react-router-dom';
-import UserPage from '../../features/Users/UserPage';
 import Users from '../../features/Users/Users';
 
 const AppRouter = () => (
@@ -16,7 +16,7 @@ const AppRouter = () => (
         <Users />
       </Route>
       <Route path="/:username">
-        <UserPage />
+        <User />
       </Route>
     </Switch>
   </Router>

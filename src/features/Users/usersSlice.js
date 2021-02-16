@@ -33,9 +33,11 @@ const usersSlice = createSlice({
       const { data, hasMore } = payload;
       usersAdapter.addMany(state, data);
       state.hasMore = hasMore;
+      state.status = loadingStates.SUCCEEDED;
     },
     [fetchUsers.rejected]: (state, { error }) => {
       state.error = error;
+      state.status = loadingStates.FAILED;
     },
   },
 });
