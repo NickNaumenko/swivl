@@ -1,9 +1,10 @@
 import { loadingStates } from 'helpers/constants';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { NavLink, useParams } from 'react-router-dom';
 import {
-  Card, Container, Divider, Grid, Icon, Image,
+  Breadcrumb,
+  Card, Container, Divider, Grid, Icon, Image, Segment,
 } from 'semantic-ui-react';
 import UserPlaceholder from './UserPlaceholder';
 import { fetchUser, selectCurrentUser, selectUserStatus } from './userSlice';
@@ -42,6 +43,14 @@ const User = () => {
 
   return (
     <Container>
+      <Segment>
+        <Breadcrumb>
+          <Breadcrumb.Section link as={NavLink} to="/">Home</Breadcrumb.Section>
+          <Breadcrumb.Divider icon="right chevron" />
+          <Breadcrumb.Section active>{username}</Breadcrumb.Section>
+        </Breadcrumb>
+      </Segment>
+
       <Grid>
         <Grid.Column tablet="6" mobile="16" computer="6">
           <Image centered src={avatarUrl} />
