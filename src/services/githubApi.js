@@ -6,6 +6,6 @@ const GITHUB_API_URL = 'https://api.github.com/';
 
 axios.defaults.baseURL = GITHUB_API_URL;
 
-export const fetchUsers = async () => Promise.resolve(users);
+export const getUsers = async () => Promise.resolve(users);
 
-export const fetchUser = async () => Promise.resolve(user);
+export const getUser = async () => Promise.resolve(user);
