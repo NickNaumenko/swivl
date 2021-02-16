@@ -7,7 +7,9 @@ import {
   Card, Container, Divider, Grid, Icon, Image, Segment,
 } from 'semantic-ui-react';
 import UserPlaceholder from './UserPlaceholder';
-import { fetchUser, selectCurrentUser, selectUserStatus } from './userSlice';
+import {
+  fetchUser, removeUser, selectCurrentUser, selectUserStatus,
+} from './userSlice';
 
 const formatDate = (dateStr) => new Date(dateStr).toLocaleDateString();
 
@@ -17,6 +19,7 @@ const User = () => {
 
   useEffect(() => {
     dispatch(fetchUser(username));
+    return () => dispatch(removeUser());
   }, [username, dispatch]);
 
   const user = useSelector((state) => selectCurrentUser(state, username));
