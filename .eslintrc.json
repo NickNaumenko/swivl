@@ -23,5 +23,12 @@
         "no-plusplus": "off",
         "react/prop-types": "off"
     },
-    "root": true
+    "root": true,
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "moduleDirectory": ["node_modules", "src/"]
+        }
+      }
+    }
 }
