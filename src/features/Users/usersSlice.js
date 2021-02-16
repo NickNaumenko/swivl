@@ -19,6 +19,13 @@ export const fetchUsers = createAsyncThunk(
     const response = await githubApi.getUsers(options);
     return response;
   },
+  {
+    condition: (opts, { getState }) => {
+      const { users: { status } } = getState();
+      if (status === 'LOADING') return false;
+      return true;
+    },
+  },
 );
 
 const usersSlice = createSlice({
@@ -50,5 +57,7 @@ export const {
   selectIds: selectUsersIds,
   selectById: selectUserById,
 } = usersSelectors;
+
+export const selectUsersStatus = ({ users: { status } }) => status;
 
 export default usersSlice.reducer;

@@ -1,21 +1,33 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container, List } from 'semantic-ui-react';
+import { Container, List, Loader } from 'semantic-ui-react';
 import InfiniteScroll from 'react-infinite-scroller';
+import { loadingStates } from 'helpers/constants';
 import UserItem from './UserItem';
-import { fetchUsers, selectUsersIds } from './usersSlice';
+import { fetchUsers, selectUsersIds, selectUsersStatus } from './usersSlice';
+
+const ItemLoader = () => (
+  <List.Item>
+    <Loader active inline="centered" size="medium" key="loader">Loading...</Loader>
+  </List.Item>
+);
 
 const Users = () => {
   const dispatch = useDispatch();
+  const status = useSelector(selectUsersStatus);
 
   useEffect(() => {
-    dispatch(fetchUsers());
-  }, []);
+    if (status === loadingStates.IDLE) {
+      dispatch(fetchUsers());
+    }
+  }, [status, dispatch]);
 
   const users = useSelector(selectUsersIds);
 
   const loadMore = (page) => {
-    dispatch(fetchUsers({ page, since: users[users.length - 1] }));
+    if (status !== loadingStates.IDLE) {
+      dispatch(fetchUsers({ page, since: users[users.length - 1] }));
+    }
   };
 
   return (
@@ -23,7 +35,7 @@ const Users = () => {
       <InfiniteScroll
         pageStart={1}
         hasMore
-        loader={<h4 key="loader">Loading...</h4>}
+        loader={<ItemLoader key="loader" />}
         loadMore={loadMore}
       >
         <List divided relaxed>
